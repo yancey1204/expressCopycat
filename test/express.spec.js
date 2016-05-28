@@ -1,11 +1,20 @@
 import { expect } from 'chai';
 import { describe, it } from 'mocha';
-import { expressCopycat } from '../lib/expresscopycat';
+import http from 'http';
 
-describe('express function', () => {
-  it('should return a function', () => {
-    const app = expressCopycat();
 
-    app.listen(8000);
+describe('server', () => {
+  const hostname = 'http://127.0.0.1:3000';
+
+  it('statusCode return 202 if url exists', () => {
+    http.get(`${hostname}/`, (res) => {
+      expect(res.statusCode).to.equal(200);
+    });
+  });
+
+  it('statusCode return 404 if url not exists', () => {
+    http.get(`${hostname}/helo`, (res) => {
+      expect(res.statusCode).to.equal(404);
+    });
   });
 });
